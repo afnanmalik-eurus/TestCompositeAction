@@ -8,35 +8,25 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout TestCompositeAction repo files
-      shell: bash
-      run: |
-        echo "=== Current directory ==="
-        pwd
-        echo "=== Listing ALL files ==="
-        find . -type f | head -20
+    - name: Checkout TestCompositeAction repo (my own files)
+      uses: actions/checkout@v4
+      with:
+        repository: afnanmalik-eurus/TestCompositeAction
+        path: composite-action-files
         
-    - name: Look for hello.txt specifically
+    - name: Verify hello.txt is now accessible
       shell: bash
       run: |
-        echo "=== Searching for hello.txt ==="
-        find . -name "hello.txt" 2>/dev/null || echo "hello.txt not found"
+        echo "=== Looking for hello.txt in composite-action-files ==="
+        find composite-action-files -name "hello.txt" -exec cat {} \;
         
-    - name: Check if we can read hello.txt
+    - name: List all files from composite repo
       shell: bash
       run: |
-        if [ -f "./hello.txt" ]; then
-          echo "hello.txt found in root!"
-          cat ./hello.txt
-        else
-          echo "hello.txt not in root, searching everywhere..."
-          find . -name "hello.txt" -exec cat {} \; 2>/dev/null || echo "File not found anywhere"
-        fi
+        echo "=== Files from TestCompositeAction repo ==="
+        find composite-action-files -type f | head -20
         
-    - name: List directory structure
-      shell: bash
-      run: |
-        echo "=== Directory structure ==="
-        ls -la
-        echo "=== Parent directory ==="
-        ls -la ../
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
