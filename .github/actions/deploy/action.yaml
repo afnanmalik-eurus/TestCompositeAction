@@ -24,7 +24,8 @@ runs:
       shell: bash
       run: |
         echo "=== Files from TestCompositeAction repo ==="
-        ls -la composite-action-files/
+        cd .github/actions/deploy
+        ls -la
         
     - name: Setup Node
       uses: actions/setup-node@v4
