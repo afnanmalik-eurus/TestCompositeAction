@@ -1,40 +1,42 @@
-name: Basic Composite Action
-description: Basic Example of Composite Action 
-
+name: 'Composite Action'
+description: 'My composite action'
 inputs:
   node-version:
-    description: Node.js Version 
     required: true
-    default: '18.x'
-
-outputs: 
-  repoOwner:
-    description: "Print Repo Owner"
-    value: ${{ steps.vars.outputs.RepositoryOwner }}
+    type: string
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
-    - name: print Hello 
-      run: echo " Hello From Composite Action! "
+    - name: Checkout TestCompositeAction repo files
       shell: bash
-    
-    - name: setup node.js ${{ inputs.node-version}}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ inputs.node-version }}
-
-    - name: print node version
-      run: node -v
-      shell: bash
-
-    - name: variables
-      id: vars
       run: |
-        echo "RepositoryOwner=${{ github.repository_owner }}" >> $GITHUB_OUTPUT
-        echo "RepositoryName=${{ github.repository }}" >> $GITHUB_OUTPUT
+        echo "=== Current directory ==="
+        pwd
+        echo "=== Listing ALL files ==="
+        find . -type f | head -20
+        
+    - name: Look for hello.txt specifically
       shell: bash
-
-
-
-  
+      run: |
+        echo "=== Searching for hello.txt ==="
+        find . -name "hello.txt" 2>/dev/null || echo "hello.txt not found"
+        
+    - name: Check if we can read hello.txt
+      shell: bash
+      run: |
+        if [ -f "./hello.txt" ]; then
+          echo "hello.txt found in root!"
+          cat ./hello.txt
+        else
+          echo "hello.txt not in root, searching everywhere..."
+          find . -name "hello.txt" -exec cat {} \; 2>/dev/null || echo "File not found anywhere"
+        fi
+        
+    - name: List directory structure
+      shell: bash
+      run: |
+        echo "=== Directory structure ==="
+        ls -la
+        echo "=== Parent directory ==="
+        ls -la ../
