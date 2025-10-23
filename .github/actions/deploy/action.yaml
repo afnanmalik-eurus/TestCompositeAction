@@ -30,7 +30,7 @@ runs:
       shell: bash
       run: |
         echo "=== All files in composite repo ==="
-        find composite-action-files -type f -not -path "*/\.git/*
+        find composite-action-files -type f -not -path "*/\.git/*" 
         
     - name: Setup Node
       uses: actions/setup-node@v4
