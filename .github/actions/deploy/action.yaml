@@ -10,9 +10,6 @@ runs:
   steps:
     - name: Checkout TestCompositeAction repo (my own files)
       uses: actions/checkout@v4
-      with:
-        repository: afnanmalik-eurus/TestCompositeAction
-        path: composite-action-files
         
     - name: Verify hello.txt is now accessible
       shell: bash
