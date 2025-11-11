@@ -14,8 +14,6 @@ jobs:
       # Step 1: Checkout DevOps repo (the current repo)
       - name: Checkout DevOps repo
         uses: actions/checkout@v4
-        with:
-          path: devops-repo   
 
       # Step 2: Checkout Developer repo into a different folder
       - name: Checkout Developer repo
