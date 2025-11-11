@@ -33,4 +33,4 @@ jobs:
       - name: Print file from DevOps repo
         run: |
           echo "===== File from DevOps Repo ====="
-          cat test-file.txt
+          cat $GITHUB_WORKSPACE/test-file.txt
