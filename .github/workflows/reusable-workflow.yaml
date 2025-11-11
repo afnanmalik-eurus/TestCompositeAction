@@ -3,15 +3,22 @@ name: Reusable Workflow Example
 on:
   workflow_call:
     inputs:
-      file_content:
+      file-path:
         required: true
         type: string
 
 jobs:
-  print-message:
+  use-dev-file:
     runs-on: ubuntu-latest
     steps:
-      - name: Print file content received from developer repo
+      - name: Checkout developer repo
+        uses: actions/checkout@v4
+        with:
+          repository: afnanmalik-eurus/Composite-Action  
+          ref: main                                    
+          token: ${{ secrets.PAT }} 
+
+      - name: Print file from developer repo
         run: |
-          echo "===== Message from Developer Repo ====="
-          echo "${{ inputs.file_content }}"
+          echo "===== File from Developer Repo ====="
+          cat ${{ inputs.file-path }}
