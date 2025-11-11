@@ -14,10 +14,6 @@ jobs:
       # Step 1: Checkout DevOps repo (the current repo)
       - name: Checkout DevOps repo
         uses: actions/checkout@v4
-        with:
-          repository: afnanmalik-eurus/TestCompositeAction  # DevOps repo name
-          ref: main
-          path: devops-repo
 
       # Step 2: Checkout Developer repo into a different folder
       - name: Checkout Developer repo
@@ -37,4 +33,4 @@ jobs:
       - name: Print file from DevOps repo
         run: |
           echo "===== File from DevOps Repo ====="
-          cat devops-repo/test-file.txt
+          cat $GITHUB_WORKSPACE/test-file.txt
