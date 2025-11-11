@@ -11,13 +11,28 @@ jobs:
   use-dev-file:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout developer repo
+      # Step 1: Checkout DevOps repo (the current repo)
+      - name: Checkout DevOps repo
         uses: actions/checkout@v4
         with:
-          repository: afnanmalik-eurus/Composite-Action  
-          ref: main                               
-          
-      - name: Print file from developer repo
+          path: devops-repo   
+
+      # Step 2: Checkout Developer repo into a different folder
+      - name: Checkout Developer repo
+        uses: actions/checkout@v4
+        with:
+          repository: afnanmalik-eurus/Composite-Action
+          ref: main
+          path: developer-repo  
+
+      # Step 3: Access file from developer repo
+      - name: Print file from Developer repo
         run: |
           echo "===== File from Developer Repo ====="
-          cat ${{ inputs.file-path }}
+          cat developer-repo/${{ inputs.file-path }}
+
+      # Step 4: Access something from DevOps repo
+      - name: Print file from DevOps repo
+        run: |
+          echo "===== File from DevOps Repo ====="
+          cat devops-repo/test-file.txt
