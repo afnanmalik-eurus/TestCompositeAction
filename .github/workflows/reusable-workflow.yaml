@@ -35,4 +35,4 @@ jobs:
       - name: Print file from DevOps repo
         run: |
           echo "===== File from DevOps Repo ====="
-          cat devops-repo/test-file.txt
+          cat test-file.txt
